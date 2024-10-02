@@ -1,20 +1,45 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
+import Historial from './frontend/Historial'; 
+import Home from './frontend/Home'; 
+import Longitud from './frontend/Longitud'; 
+import Peso from './frontend/Peso';
+import Temperatura from './frontend/Temperatura';
 
-export default function App() {
+const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
+
+// Definimos el Stack para Home
+const HomeStack = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Stack.Navigator initialRouteName='Home'>
+      <Stack.Screen name="Categorias" component={Home} />
+      <Stack.Screen name="Longitud" component={Longitud} />
+      <Stack.Screen name="Peso" component={Peso} />
+      <Stack.Screen name="Temperatura" component={Temperatura} />
+    </Stack.Navigator>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+// Navegación por pestañas
+const AppTabs = () => {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Home" component={HomeStack} />
+      <Tab.Screen name="Historial" component={Historial} />
+    </Tab.Navigator>
+  );
+};
+
+// Componente principal
+const App = () => {
+  return (
+    <NavigationContainer>
+      <AppTabs />
+    </NavigationContainer>
+  );
+};
+
+export default App;
